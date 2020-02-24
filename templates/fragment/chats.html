@@ -1,0 +1,80 @@
+{% extends '../base.html' %}
+
+{% block content %}
+{% include 'fragment/tabs.html' %}
+
+<h1>Chats</h1>
+
+  <div class="inbox_chat">
+    {% if users %}
+      <div class="chat_title">User : </div>
+    {% endif %}
+
+    {% for key, value in users.items %}
+    <div class="chat_list">
+      <div class="chat_people">
+        <div class="chat_img">
+          {% if value.imageURL == "default" %}
+            {% load static %}
+            <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+          {% else %}
+            <img src={{value.imageURL}} alt="image" class="img-circle">
+          {% endif %}
+
+          {% if value.status == "online" %}
+            <span class="circle online"></span>
+          {% elif value.status == "offline"%}
+            <span class="circle offline"></span>
+          {% endif %}
+
+         </div>
+
+        <div class="chat_ib">
+          <h5>{{value.username}}</h5>
+          {% if value.type == "text" %}
+          <p>{{value.message}}</p>
+          {% elif value.type == "image"%}
+          <p>Sent a photo.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if rooms %}
+      <div class="chat_title">Room : </div>
+    {% endif %}
+    {% for key, value in rooms.items %}
+    <div class="chat_list">
+      <div class="chat_people">
+        <div class="chat_img">
+          {% if value.imageURL == "default" %}
+            {% load static %}
+            <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+          {% else %}
+            <img src={{value.imageURL}} alt="image" class="img-circle">
+          {% endif %}
+         </div>
+
+        <div class="chat_ib">
+          <h5>{{value.chatRoomName}}</h5>
+          {% if value.type == "text" %}
+          <p>{{value.message}}</p>
+          {% elif value.type == "image"%}
+          <p>Sent a photo.</p>
+          {% endif %}
+        </div>
+        <div class="ic_lock">
+          {% if value.secret_status == "secret" %}
+            {% load static %}
+            <img src="{% static 'images/ic_lock_white_48dp.png' %}" alt="ic_lock_white_48dp.png">
+          {% elif value.secret_status == "not_secret" %}
+
+          {% endif %}
+        </div>
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

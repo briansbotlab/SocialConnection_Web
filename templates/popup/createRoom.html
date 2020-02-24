@@ -1,0 +1,59 @@
+<div class="modal fade" id="createRoom" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"  style="display:block; text-align: center;">Create a new Chat Room</h4>
+        </div>
+        <form action="./create/" method="post">
+          {% csrf_token %}
+        <div class="modal-body">
+          <div class="row">
+            <!-- List group -->
+             <ul class="list-group">
+
+               <li class="list-group-item">
+                 <label for="roomname">Chat Room Name :</label>
+                 <input type="text" class="form-control" id="roomname" name="roomname" placeholder="Chat Room Name" required>
+                </li>
+
+                 <li class="list-group-item">
+                    <label>Secret :</label>
+                       <div class="material-switch pull-right">
+                           <input id="SwitchOptionDefault"
+                           class="form-control"
+                           name="someSwitchOption001"
+                           type="checkbox"
+                            onclick="switchFunction()"/>
+                           <label for="SwitchOptionDefault" class="label-default"></label>
+                       </div>
+                   </li>
+
+                 <li class="list-group-item" id="passfield"  style="display:none">
+                   <label for="roompass">Chat Room Name :</label>
+                   <input type="password" class="form-control" id="roompass" name="roompass" placeholder="Chat Room Password">
+                  </li>
+
+              </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: left">
+              <button type="submit"
+               class="btn"
+               style="background-color:#7400ff; color:#ffffff;width:100%;">Create</button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: right;">
+              <button type="button"
+              data-dismiss="modal"
+              class="btn"
+              style="background-color:#a157fa; color:#ffffff;width:100%;">Cancel</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    {% load static %}
+    <script src="{% static 'js/switch.js' %}"></script>
+</div>

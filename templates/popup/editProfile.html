@@ -1,0 +1,47 @@
+<div class="modal fade" id="editProfile" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"  style="display:block; text-align: center;">Edit Profile</h4>
+        </div>
+        <form action="./edit/" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+        <div class="modal-body">
+          <div class="row">
+            <!-- List group -->
+             <ul class="list-group">
+
+               <li class="list-group-item">
+                 <label for="username">New User Name :</label>
+                 <input type="text" class="form-control" id="username" name="username" placeholder="New User Name" required>
+                </li>
+
+                 <li class="list-group-item">
+                   <label for="upload">New Profile Image :</label>
+                   <input type="file" class="form-control" id="upload" name="upload">
+                  </li>
+
+              </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: left">
+              <button type="submit"
+               class="btn"
+               style="background-color:#7400ff; color:#ffffff;width:100%;">Update</button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: right;">
+              <button type="button"
+              data-dismiss="modal"
+              class="btn"
+              style="background-color:#a157fa; color:#ffffff;width:100%;">Cancel</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    {% load static %}
+    <script src="{% static 'js/switch.js' %}"></script>
+</div>

@@ -1,0 +1,70 @@
+{% extends '../base.html' %}
+
+{% block content %}
+{% include 'fragment/tabs.html' %}
+
+{% include 'popup/createRoom.html' %}
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: left">
+      <h1>ChatRooms</h1>
+    </div>
+    <!-- Trigger the modal with a button -->
+    <div class="col-md-6 col-sm-6 col-xs-6" style=" display:block; text-align: right">
+      <h1>
+        <button
+        type="submit"
+        class="btn"
+        style="background-color:#00FF00;
+         color:#ffffff;
+          width:39;
+          height:39;
+          border-radius:50%;"
+          data-toggle="modal" data-target="#createRoom">+</button>
+      </h1>
+    </div>
+</div>
+
+
+
+<div class="inbox_chat">
+  <div class="srch_bar center">
+    <div class="stylish-input-group">
+      <input type="text" class="search-bar" id="secrchRoom" name="secrchRoom" placeholder="Searching chat room ..." >
+    </div>
+  </div>
+
+  {% load static %}
+  <script src="{% static 'js/searchChatRoom.js' %}"></script>
+
+  <div id="rooms">
+  {% for key, value in rooms.items %}
+  <div class="chat_list">
+    <div class="chat_people">
+      <div class="chat_img">
+        {% if value.imageURL == "default" %}
+          {% load static %}
+          <img class="img-circle" src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png" >
+        {% else %}
+          <img class="img-circle" src={{value.imageURL}} alt="image">
+        {% endif %}
+
+       </div>
+
+      <div class="chat_ib">
+        <h5>{{value.chatRoomName}}</h5>
+      </div>
+      <div class="ic_lock">
+        {% if value.secret_status == "secret" %}
+          {% load static %}
+          <img src="{% static 'images/ic_lock_white_48dp.png' %}" alt="ic_lock_white_48dp.png">
+        {% elif value.secret_status == "not_secret" %}
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'popup/imageMessage.html' %}
+<div class="container">
+
+<div class="messaging">
+      <div class="inbox_msg">
+        <div class="mesgs">
+          <div class="msg_header ">
+
+              {% if user.imageURL == "default" %}
+                {% load static %}
+                <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+              {% else %}
+                <img src={{user.imageURL}} alt="userImg">
+              {% endif %}
+
+
+              <span class="msg_header_name">{{user.username}}</span>
+
+          </div>
+
+          <input hidden type="text"  id="userid" value={{user.id}} >
+          <input hidden type="text"  id="userImg" value={{user.imageURL}} >
+          <input hidden type="text"  id="last_msg_senttime" value={{last_msg.senttime}} >
+
+          <div class="msg_history" id="msg_history">
+          {% for key, value in msgs.items %}
+          {% if value.sender == user.id %}
+            <div class="incoming_msg">
+              <div class="incoming_msg_img">
+                 {% if user.imageURL == "default" %}
+                   {% load static %}
+                   <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+                 {% else %}
+                   <img src={{user.imageURL}} alt="userImg">
+                 {% endif %}
+               </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  {% if value.type == "text" %}
+                    <p>{{value.message}}</p>
+                  {% elif value.type == "image" %}
+                    <img src={{value.message}} alt="msgImage">
+                  {% endif %}
+                  <span class="time_date_left">{{value.senttime}}</span></div>
+              </div>
+            </div>
+          {% else %}
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                {% if value.type == "text" %}
+                  <p>{{value.message}}</p>
+                {% elif value.type == "image" %}
+                  <img src={{value.message}} alt="msgImage">
+                {% endif %}
+                <span class="time_date">{{value.senttime}}
+
+                    {% if value.senttime == last_msg.senttime %}
+                      {% if value.isseen  %}
+                      <div class="seen" id="seen">
+                        <br>Seen
+                        </div>
+                      {% else %}
+                      <div class="seen" id="seen">
+                        <br>Delivered
+                        </div>
+                      {% endif %}
+                    {% endif %}
+
+                </span> </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+          </div>
+          <div class="type_msg">
+            <div class="input_msg_write">
+              <button class="msg_send_image_btn" type="button" data-toggle="modal" data-target="#imageMessage">
+                {% load static %}
+                <img src="{% static 'images/ic_photo_black_48dp.png' %}" alt="ic_photo_black_48dp.png"
+                style="width:40px;height:40px;"/>
+              </button>
+              <form action="./textMsg/" method="post">
+                {% csrf_token %}
+              <input type="text" id="message"  name="message" class="write_msg" placeholder="Type a message here" />
+
+              <button id = "msg_send_btn"class="msg_send_btn" type="submit">
+                {% load static %}
+                <img src="{% static 'images/ic_send_white.png' %}" alt="ic_send_white.png"
+                style="width:20px;height:20px;"/>
+              </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div></div>
+
+    {% load static %}
+    <!-- use django static tag to load js file and css file. -->
+    <script src="{% static 'js/refreshmessage.js' %}"></script>
+    <script src="{% static 'js/autoscrolltobottom.js' %}"></script>
+
+
+
+{% endblock %}

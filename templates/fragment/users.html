@@ -1,0 +1,40 @@
+{% extends '../base.html' %}
+
+{% block content %}
+{% include 'fragment/tabs.html' %}
+
+<h1>Users</h1>
+
+<div class="inbox_chat">
+  <div class="srch_bar center">
+    <div class="stylish-input-group">
+      <input type="text" class="search-bar" id="secrchUser" name="secrchUser" placeholder="Searching user ..." >
+    </div>
+  </div>
+  {% load static %}
+  <script src="{% static 'js/searchUser.js' %}"></script>
+  <div id="users">
+  {% for key, value in users.items %}
+  <a href={{value.id}}>
+  <div class="chat_list">
+    <div class="chat_people">
+      <div class="chat_img">
+        {% if value.imageURL == "default" %}
+          {% load static %}
+          <img class="img-circle" src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png" >
+        {% else %}
+          <img src={{value.imageURL}} alt="image" class="img-circle">
+        {% endif %}
+
+       </div>
+
+      <div class="chat_ib">
+        <h5>{{value.username}}</h5>
+      </div>
+    </div>
+  </div>
+  </a>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}
