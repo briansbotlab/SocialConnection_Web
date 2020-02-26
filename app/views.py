@@ -32,7 +32,8 @@ def register(request):
             auth.create_user_with_email_and_password(email, password)
             user = auth.sign_in_with_email_and_password(email, password)
             Users.save_user(username, email, user['localId'])
-            sessionCtl.setLoginSession(request,username,user['localId'],email)
+            userData = Users.getUserDatabyId(user['localId'])
+            sessionCtl.setLoginSession(request,username,user['localId'],email,userData['imageURL'])
             return redirect('/main/Chats')
         except:
             message = "Unable to Register."
