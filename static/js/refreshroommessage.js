@@ -12,14 +12,14 @@ function urlify(text) {
 }
 
 window.setInterval(function(){
+    var roomid = document.getElementById('roomid').value;
     var userid = document.getElementById('userid').value;
-    var userImg = document.getElementById('userImg').value;
     var url = "/static/images/ic_launcher.png";
 
     $.ajax({
-      url: '/main/Users/'+userid+'/interval/',
+      url: '/main/ChatRooms/'+roomid+'/interval/',
       data: {
-        'userid': userid
+        'roomid': roomid
       },
       type: 'GET',
       dataType: 'json',
@@ -32,16 +32,13 @@ window.setInterval(function(){
           last_msg_senttime = data[i].senttime;
         }
 
-        //console.log(last_msg_senttime);
-        //var last_msg_senttime = data[totalItems-1].senttime;
-          //console.log(data);
         $("#msg_history").html("")
         if (data == ''){
             $("#msg_history").append("a");
         }else{
           $.each(data,function(index,item){
 
-            if(item.sender == userid){
+            if(item.sender != userid){
               var incoming_msg = document.createElement("div");
               incoming_msg.setAttribute("class", "incoming_msg");
 
@@ -52,16 +49,18 @@ window.setInterval(function(){
 
               var innerHtml = "";
 
-                  if(userImg == "default"){
+                  if(item.imageURL == "default"){
                     innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ url+" alt="+'ic_launcher.png' +">";
                   }else{
-                    innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ userImg+" alt="+'userImg' +">";
+                    innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ item.imageURL+" alt="+'roomImg' +">";
                   }
 
               incoming_msg_img.innerHTML = innerHtml;
 
               var received_msg = document.createElement("div");
               received_msg.setAttribute("class", "received_msg");
+
+              received_msg.innerHTML = "<p>" +item.sendername+"</p>";
 
               var received_withd_msg = document.createElement("div");
               received_withd_msg.setAttribute("class", "received_withd_msg");
@@ -100,8 +99,8 @@ window.setInterval(function(){
 
 
                   if(item.senttime == last_msg_senttime){
-                    if(item.isseen){
-                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+"</div>";
+                    if(item.seennum > 0){
+                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+item.seennum+"</div>";
 
                     }else {
                       innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Delivered"+"</div>";

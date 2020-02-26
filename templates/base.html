@@ -27,7 +27,16 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
               {% if  request.session.username %}
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{request.session.username}}</a></li>
+                <li><a href="#">
+                  {% if  request.session.userImg == "default" %}
+                    {% load static %}
+                    <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png"
+                    style="width: 20px;height: 20px;">
+                  {% else %}
+                    <img src={{request.session.userImg}} alt="image" class="img-circle"
+                    style="width: 20px;height: 20px;">
+                  {% endif %}
+                   {{request.session.username}}</a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
               {% else %}
                 <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
@@ -41,5 +50,6 @@
           {% block content %}
           {% endblock %}
         </div>
+
     </body>
 </html>

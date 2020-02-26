@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'popup/editRoom.html' %}
+{% include 'popup/roomImg.html' %}
+
+<div class="row">
+    <h1>
+      <div class="col-md-6 col-sm-6 col-xs-6" style="color:#7400ff;display:block; text-align: left">
+      Chat Room Setting
+      </div>
+      {% if room.manager == request.session.uid %}
+      <div class="col-md-6 col-sm-6 col-xs-6" style=" display:block; text-align: right">
+        {% load static %}
+        <button
+        type="submit" class="btn"
+          data-toggle="modal" data-target="#editRoom">
+          <img src="{% static 'images/ic_edit.png' %}"
+          alt="ic_edit.png"
+          style="width:39;height: 39;">
+          </button>
+      </div>
+      {% endif %}
+    </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6  col-md-offset-3" style=" display:block; text-align: center" data-toggle="modal" data-target="#editRoomImg">
+    {% if room.imageURL == "default" %}
+    {% load static %}
+    <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png"
+    style="max-width: 100%;
+      max-height: 100%;
+      margin:auto;"/>
+    {% else %}
+      <img src={{room.imageURL}} alt="image">
+    {% endif %}
+  </div>
+</div>
+
+
+<div class="row">
+  <h3>
+    <div class="col-md-6 col-md-offset-3" style="color:#7400ff;display:block; text-align: center">
+    {{room.chatRoomName}}
+    </div>
+  </h3>
+</div>
+
+  <div class="inbox_chat">
+    {% if users %}
+      <div class="chat_title">Chat Room - Other Users : </div>
+    {% endif %}
+
+    {% for key, value in users.items %}
+    <a href={{value.id}}>
+    <div class="chat_list">
+      <div class="chat_people">
+        <div class="chat_img">
+          {% if value.imageURL == "default" %}
+            {% load static %}
+            <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+          {% else %}
+            <img src={{value.imageURL}} alt="image" class="img-circle">
+          {% endif %}
+
+         </div>
+
+        <div class="chat_ib">
+          <h5>{{value.username}}</h5>
+
+        </div>
+      </div>
+    </div>
+    </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

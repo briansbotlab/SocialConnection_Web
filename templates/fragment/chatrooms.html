@@ -39,7 +39,8 @@
 
   <div id="rooms">
   {% for key, value in rooms.items %}
-  <div class="chat_list">
+  {% include 'popup/enterRoom.html' %}
+  <div class="chat_list" data-toggle="modal" data-target="#enterRoom{{value.id}}">
     <div class="chat_people">
       <div class="chat_img">
         {% if value.imageURL == "default" %}

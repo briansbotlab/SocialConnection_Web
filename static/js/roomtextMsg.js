@@ -1,6 +1,3 @@
-//window.setInterval
-//$(document).ready(function(){
-//$("#msg_send_btn").click
 
 function urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -10,18 +7,20 @@ function urlify(text) {
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
-
-window.setInterval(function(){
+$(document).ready(function(){
+$("#msg_send_btn").click(function(){
+    var roomid = document.getElementById('roomid').value;
     var userid = document.getElementById('userid').value;
-    var userImg = document.getElementById('userImg').value;
+
     var url = "/static/images/ic_launcher.png";
+    var message = document.getElementById('message').value;
 
     $.ajax({
-      url: '/main/Users/'+userid+'/interval/',
+      url: '/main/ChatRooms/'+roomid+'/textMsg/',
       data: {
-        'userid': userid
+        'message': message
       },
-      type: 'GET',
+      type: 'POST',
       dataType: 'json',
       success: function (data) {
 
@@ -32,16 +31,13 @@ window.setInterval(function(){
           last_msg_senttime = data[i].senttime;
         }
 
-        //console.log(last_msg_senttime);
-        //var last_msg_senttime = data[totalItems-1].senttime;
-          //console.log(data);
         $("#msg_history").html("")
         if (data == ''){
             $("#msg_history").append("a");
         }else{
           $.each(data,function(index,item){
 
-            if(item.sender == userid){
+            if(item.sender != userid){
               var incoming_msg = document.createElement("div");
               incoming_msg.setAttribute("class", "incoming_msg");
 
@@ -52,16 +48,18 @@ window.setInterval(function(){
 
               var innerHtml = "";
 
-                  if(userImg == "default"){
+                  if(item.imageURL == "default"){
                     innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ url+" alt="+'ic_launcher.png' +">";
                   }else{
-                    innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ userImg+" alt="+'userImg' +">";
+                    innerHtml = innerHtml +"<img class="+'img-circle' +" src="+ item.imageURL+" alt="+'roomImg' +">";
                   }
 
               incoming_msg_img.innerHTML = innerHtml;
 
               var received_msg = document.createElement("div");
               received_msg.setAttribute("class", "received_msg");
+
+              received_msg.innerHTML = "<p>" +item.sendername+"</p>";
 
               var received_withd_msg = document.createElement("div");
               received_withd_msg.setAttribute("class", "received_withd_msg");
@@ -100,8 +98,8 @@ window.setInterval(function(){
 
 
                   if(item.senttime == last_msg_senttime){
-                    if(item.isseen){
-                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+"</div>";
+                    if(item.seennum > 0){
+                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+item.seennum+"</div>";
 
                     }else {
                       innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Delivered"+"</div>";
@@ -117,15 +115,15 @@ window.setInterval(function(){
         for (var i = 0, len = elements.length; i < len; i++) {
             elements[i].innerHTML = urlify(elements[i].innerHTML);
         }
+        $('#message').val('');
         }
 
 
-        //$('#msg_history').scrollTop($('#msg_history')[0].scrollHeight);
+        $('#msg_history').scrollTop($('#msg_history')[0].scrollHeight);
       },
       error:function(xhr){
         alert("發生錯誤: " + xhr.status + " " + xhr.statusText + " " + xhr.readyState);
       }
     });
-//});
-//});
-}, 1000);
+});
+});

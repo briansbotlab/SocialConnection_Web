@@ -10,36 +10,38 @@
       <div class="inbox_msg">
         <div class="mesgs">
           <div class="msg_header ">
-
-              {% if user.imageURL == "default" %}
+            <a href="setting/">
+              {% if room.imageURL == "default" %}
                 {% load static %}
                 <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
               {% else %}
-                <img src={{user.imageURL}} alt="userImg">
+                <img src={{room.imageURL}} alt="userImg">
               {% endif %}
 
 
-              <span class="msg_header_name">{{user.username}}</span>
-
+              <span class="msg_header_name">{{room.chatRoomName}}  ({{num}})</span>
+            </a>
           </div>
 
-          <input hidden type="text"  id="userid" value={{user.id}} >
-          <input hidden type="text"  id="userImg" value={{user.imageURL}} >
-          
+          <input hidden type="text"  id="roomid" value={{room.id}} >
+          <input hidden type="text"  id="userid" value={{request.session.uid}} >
+          <input hidden type="text"  id="roomImg" value={{room.imageURL}} >
+
 
           <div class="msg_history" id="msg_history">
             {% for key, value in msgs.items %}
-            {% if value.sender == user.id %}
+            {% if value.sender != request.session.uid %}
               <div class="incoming_msg">
                 <div class="incoming_msg_img">
-                   {% if user.imageURL == "default" %}
+                   {% if value.imageURL == "default" %}
                      {% load static %}
                      <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
                    {% else %}
-                     <img src={{user.imageURL}} alt="userImg">
+                     <img src={{value.imageURL}} alt="roomImg">
                    {% endif %}
                  </div>
                 <div class="received_msg">
+                  <p>{{value.sendername}}</p>
                   <div class="received_withd_msg">
                     {% if value.type == "text" %}
                       <p class="msg">{{value.message}}</p>
@@ -60,9 +62,9 @@
                   <span class="time_date">{{value.senttime}}
 
                       {% if value.senttime == last_msg.senttime %}
-                        {% if value.isseen  %}
+                        {% if value.seennum > 0  %}
                         <div class="seen" id="seen">
-                          <br>Seen
+                          <br>Seen {{value.seennum}}
                           </div>
                         {% else %}
                         <div class="seen" id="seen">
@@ -103,10 +105,10 @@
     {% load static %}
     <!-- use django static tag to load js file and css file. -->
 
-    <script src="{% static 'js/refreshmessage.js' %}"></script>
+    <script src="{% static 'js/refreshroommessage.js' %}"></script>
     <script src="{% static 'js/autoscrolltobottom.js' %}"></script>
 
-    <script src="{% static 'js/textMsg.js' %}"></script>
+    <script src="{% static 'js/roomtextMsg.js' %}"></script>
 
 
 

@@ -1,0 +1,45 @@
+<div class="modal fade" id="enterRoom{{value.id}}" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"  style="display:block; text-align: center;">Enter Chat Room</h4>
+        </div>
+        <form action={{value.id}}/ method="post">
+          {% csrf_token %}
+        <div class="modal-body">
+          <div class="row">
+            <!-- List group -->
+             <ul class="list-group">
+                  {% if value.secret_status == "secret" %}
+                 <li class="list-group-item" id="passfield">
+                   <label for="roompass">Chat Room Password :</label>
+                   <input type="password" class="form-control" id="roompass{{value.id}}" name="roompass" placeholder="Chat Room Password" required>
+                  </li>
+                  {% elif value.secret_status == "not_secret" %}
+                  <li class="list-group-item" id="passfield"  style="display:none">
+                    <label for="roompass">Chat Room Password :</label>
+                    <input type="password" class="form-control" id="roompass{{value.id}}" name="roompass" placeholder="Chat Room Password">
+                   </li>
+                  {% endif %}
+              </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: left">
+              <button type="submit"
+               class="btn"
+               style="background-color:#7400ff; color:#ffffff;width:100%;">Enter</button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6" style="display:block; text-align: right;">
+              <button type="button"
+              data-dismiss="modal"
+              class="btn"
+              style="background-color:#a157fa; color:#ffffff;width:100%;">Cancel</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+</div>

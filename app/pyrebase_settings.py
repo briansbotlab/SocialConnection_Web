@@ -1,13 +1,13 @@
 from pyrebase import pyrebase
 
 config = {
-    "apiKey": "AIzaSyDUpMOheKfDndBnDE0YmPhKIdSW1L8yvBc",
-    "authDomain": "socialconnection-cd010.firebaseapp.com",
-    "databaseURL": "https://socialconnection-cd010.firebaseio.com",
-    "projectId": "socialconnection-cd010",
-    "storageBucket": "socialconnection-cd010.appspot.com",
-    "messagingSenderId": "1028608371475",
-    "appId": "1:1028608371475:web:4f2c2af814e14dc7a748e6"
+    "apiKey": "your apiKey",
+    "authDomain": "your authDomain",
+    "databaseURL": "your databaseURL",
+    "projectId": "your projectId",
+    "storageBucket": "your storageBucket",
+    "messagingSenderId": "your messagingSenderId",
+    "appId": "your appId"
   };
 
 

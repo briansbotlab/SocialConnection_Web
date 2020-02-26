@@ -1,6 +1,3 @@
-//window.setInterval
-//$(document).ready(function(){
-//$("#msg_send_btn").click
 
 function urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -10,30 +7,27 @@ function urlify(text) {
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
-
-window.setInterval(function(){
+$(document).ready(function(){
+$("#msg_send_btn").click(function(){
     var userid = document.getElementById('userid').value;
     var userImg = document.getElementById('userImg').value;
     var url = "/static/images/ic_launcher.png";
+    var message = document.getElementById('message').value;
 
     $.ajax({
-      url: '/main/Users/'+userid+'/interval/',
+      url: '/main/Users/'+userid+'/textMsg/',
       data: {
-        'userid': userid
+        'message': message
       },
-      type: 'GET',
+      type: 'POST',
       dataType: 'json',
       success: function (data) {
-
         var totalLength = 0;
         var last_msg_senttime = "";
         for (var i in data) {
           totalLength += 1;
           last_msg_senttime = data[i].senttime;
         }
-
-        //console.log(last_msg_senttime);
-        //var last_msg_senttime = data[totalItems-1].senttime;
           //console.log(data);
         $("#msg_history").html("")
         if (data == ''){
@@ -111,21 +105,23 @@ window.setInterval(function(){
                     sent_msg.innerHTML = innerHtml;
 
             }
+
           }
         )
-        var elements = document.getElementsByClassName("msg");
-        for (var i = 0, len = elements.length; i < len; i++) {
-            elements[i].innerHTML = urlify(elements[i].innerHTML);
-        }
+          var elements = document.getElementsByClassName("msg");
+          for (var i = 0, len = elements.length; i < len; i++) {
+              elements[i].innerHTML = urlify(elements[i].innerHTML);
+          }
+
+          $('#message').val('');
         }
 
 
-        //$('#msg_history').scrollTop($('#msg_history')[0].scrollHeight);
+        $('#msg_history').scrollTop($('#msg_history')[0].scrollHeight);
       },
       error:function(xhr){
         alert("發生錯誤: " + xhr.status + " " + xhr.statusText + " " + xhr.readyState);
       }
     });
-//});
-//});
-}, 1000);
+});
+});

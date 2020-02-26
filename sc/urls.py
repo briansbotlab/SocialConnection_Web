@@ -36,14 +36,25 @@ urlpatterns = [
     path('main/Users/search/', views.search_users, name='search_users'),
     path('main/ChatRooms/search/', views.search_rooms, name='search_rooms'),
 
+
+    path('main/Chats/<str:id>/', views.chats_user_room, name='chats_user_room'),
+
+
     path('main/Users/<str:userid>/', views.message, name='message'),
     path('main/Users/<str:userid>/interval/', views.message_interval, name='message_interval'),
     path('main/Users/<str:userid>/selectImage/', views.image_message, name='image_message'),
     path('main/Users/<str:userid>/textMsg/', views.text_message, name='text_message'),
 
 
-
-    path('main/ChatRooms/create/', views.create_rooms, name='create_rooms'),
+    path('main/ChatRooms/<str:roomid>/', views.room_message, name='room_message'),
+    path('main/ChatRooms/create/room/', views.create_rooms, name='create_rooms'),
+    path('main/ChatRooms/<str:roomid>/interval/', views.room_message_interval, name='room_message_interval'),
+    path('main/ChatRooms/<str:roomid>/selectImage/', views.room_image_message, name='room_image_message'),
+    path('main/ChatRooms/<str:roomid>/textMsg/', views.room_text_message, name='room_text_message'),
+    path('main/ChatRooms/<str:roomid>/setting/', views.room_setting, name='room_setting'),
+    path('main/ChatRooms/<str:roomid>/setting/selectImage/', views.room_setting_image, name='room_setting_image'),
+    path('main/ChatRooms/<str:roomid>/setting/edit/', views.room_setting_edit, name='room_setting_edit'),
+    path('main/ChatRooms/<str:roomid>/setting/<str:userid>/', views.room_setting_chat, name='room_setting_chat'),
 
 
 

@@ -2,9 +2,9 @@ from .. import pyrebase_settings
 
 def getChatRoomDatabyId(id):
     db = pyrebase_settings.firebase.database()
-    chatlist = db.child("ChatRooms").child(id).get()
-    chatlistData = chatlist.val()
-    return chatlistData
+    roomlist = db.child("ChatRooms").child(id).get()
+    roomlistData = roomlist.val()
+    return roomlistData
 
 def save_chatroom(id, chatRoomName, manager, password, secret_status, status):
     db = pyrebase_settings.firebase.database()
@@ -47,5 +47,43 @@ def searchRooms(s):
         return Data
     else:
         return False
+
+def isRoomExist(id):
+    db = pyrebase_settings.firebase.database()
+    all_chatrooms = db.child("ChatRooms").get()
+    for chatroom in all_chatrooms.each():
+        if chatroom.key() == id:
+            return True
+    return False
+
+
+def update_Room(id,chatRoomName,password,secret_status):
+    db = pyrebase_settings.firebase.database()
+
+    data = {
+    "chatRoomName": chatRoomName,
+    "password": password,
+    "search": chatRoomName.lower(),
+    "secret_status": secret_status,
+    }
+    db.child("ChatRooms").child(id).update(data)
+
+import time
+def uploadImage(img):
+    storage = pyrebase_settings.firebase.storage()
+    stamp = str(int(time.time() * 1000))
+    cloud_name = stamp + '.' + img.split(".")[-1]
+
+    storage.child("uploads/"+cloud_name).put(img)
+    return storage.child("uploads/"+cloud_name).get_url(None)
+
+def update_RoomImg(id,imageURL):
+    db = pyrebase_settings.firebase.database()
+
+    data = {
+    "imageURL": imageURL
+    }
+    db.child("ChatRooms").child(id).update(data)
+
 #def stream_handler(users):
     # TODO:

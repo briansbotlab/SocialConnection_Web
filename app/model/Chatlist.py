@@ -30,5 +30,15 @@ def getChatlistbyId(id):
         Data[data.key()] = data.val()
     return Data
 
+def getConnections(id):
+    connections = 0
+    db = pyrebase_settings.firebase.database()
+    all_data = db.child("Chatlist").child(id).get()
+    for data in all_data.each():
+        connections += 1
+    return connections
+
+
+
 #def stream_handler(users):
     # TODO:

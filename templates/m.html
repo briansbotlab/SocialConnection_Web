@@ -1,0 +1,62 @@
+{% for key, value in msgs.items %}
+{% if value.sender == user.id %}
+  <div class="incoming_msg">
+    <div class="incoming_msg_img">
+       {% if user.imageURL == "default" %}
+         {% load static %}
+         <img src="{% static 'images/ic_launcher.png' %}" alt="ic_launcher.png">
+       {% else %}
+         <img src={{user.imageURL}} alt="userImg">
+       {% endif %}
+     </div>
+    <div class="received_msg">
+      <div class="received_withd_msg">
+        {% if value.type == "text" %}
+          <p class="msg">{{value.message}}</p>
+        {% elif value.type == "image" %}
+          <img src={{value.message}} alt="msgImage">
+        {% endif %}
+        <span class="time_date_left">{{value.senttime}}</span></div>
+    </div>
+  </div>
+{% else %}
+  <div class="outgoing_msg">
+    <div class="sent_msg">
+      {% if value.type == "text" %}
+        <p class="msg">{{value.message}}</p>
+      {% elif value.type == "image" %}
+        <img src={{value.message}} alt="msgImage">
+      {% endif %}
+      <span class="time_date">{{value.senttime}}
+
+          {% if value.senttime == last_msg.senttime %}
+            {% if value.isseen  %}
+            <div class="seen" id="seen">
+              <br>Seen
+              </div>
+            {% else %}
+            <div class="seen" id="seen">
+              <br>Delivered
+              </div>
+            {% endif %}
+          {% endif %}
+
+      </span> </div>
+  </div>
+{% endif %}
+{% endfor %}
+
+
+
+
+
+<form action="./textMsg/" method="post">
+  {% csrf_token %}
+<input type="text" id="message"  name="message" class="write_msg" placeholder="Type a message here" />
+
+<button id = "msg_send_btn"class="msg_send_btn" type="submit">
+  {% load static %}
+  <img src="{% static 'images/ic_send_white.png' %}" alt="ic_send_white.png"
+  style="width:20px;height:20px;"/>
+</button>
+</form>

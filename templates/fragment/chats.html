@@ -11,6 +11,7 @@
     {% endif %}
 
     {% for key, value in users.items %}
+    <a href={{value.userid}}>
     <div class="chat_list">
       <div class="chat_people">
         <div class="chat_img">
@@ -32,20 +33,24 @@
         <div class="chat_ib">
           <h5>{{value.username}}</h5>
           {% if value.type == "text" %}
-          <p>{{value.message}}</p>
+              <p>{{value.message}}</p>
           {% elif value.type == "image"%}
-          <p>Sent a photo.</p>
+              <p>Sent a photo.</p>
+          {% else %}
+              <p>No message!</p>
           {% endif %}
         </div>
       </div>
     </div>
+    </a>
     {% endfor %}
 
     {% if rooms %}
       <div class="chat_title">Room : </div>
     {% endif %}
     {% for key, value in rooms.items %}
-    <div class="chat_list">
+    {% include 'popup/enterRoom.html' %}
+    <div class="chat_list" data-toggle="modal" data-target="#enterRoom{{value.id}}">
       <div class="chat_people">
         <div class="chat_img">
           {% if value.imageURL == "default" %}
@@ -58,11 +63,6 @@
 
         <div class="chat_ib">
           <h5>{{value.chatRoomName}}</h5>
-          {% if value.type == "text" %}
-          <p>{{value.message}}</p>
-          {% elif value.type == "image"%}
-          <p>Sent a photo.</p>
-          {% endif %}
         </div>
         <div class="ic_lock">
           {% if value.secret_status == "secret" %}

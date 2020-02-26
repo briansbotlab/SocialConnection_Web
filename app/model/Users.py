@@ -6,6 +6,20 @@ def getUserDatabyId(userid):
     userData = user.val()
     return userData
 
+def user_login(id):
+    db = pyrebase_settings.firebase.database()
+    data = {
+    "status": "online",
+    }
+    db.child("Users").child(id).update(data)
+
+def user_logout(id):
+    db = pyrebase_settings.firebase.database()
+    data = {
+    "status": "offline",
+    }
+    db.child("Users").child(id).update(data)
+
 def update_user(id,username,imageURL):
     db = pyrebase_settings.firebase.database()
     data = {
@@ -40,9 +54,12 @@ def getUsers():
 def isUserExist(id):
     db = pyrebase_settings.firebase.database()
     all_users = db.child("Users").get()
-    for user in all_users.each():
-        if user.key() == id:
-            return True
+    try:
+        for user in all_users.each():
+            if user.key() == id:
+                return True
+    except:
+        return False
     return False
 
 def searchUsers(s):
