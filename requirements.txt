@@ -20,8 +20,8 @@ protobuf==3.11.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.19
+pyrebase==3.1.0
 pytz==2019.3
-pyrebase
 requests==2.22.0
 requests-toolbelt==0.9.1
 rsa==4.0

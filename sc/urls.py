@@ -24,7 +24,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('resetpassword/', views.resetpassword, name='resetpassword'),
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
 
     path('main/Chats/', views.chats, name='chats'),
     path('main/ChatRooms/', views.chatrooms, name='chatrooms'),
@@ -38,7 +38,7 @@ urlpatterns = [
 
 
     path('main/Chats/<str:id>/', views.chats_user_room, name='chats_user_room'),
-
+    path('main/Chats/<str:roomid>/selectImage/', views.room_image_message, name='room_image_message'),
 
     path('main/Users/<str:userid>/', views.message, name='message'),
     path('main/Users/<str:userid>/interval/', views.message_interval, name='message_interval'),
@@ -58,6 +58,4 @@ urlpatterns = [
 
 
 
-
-
-]
+] 

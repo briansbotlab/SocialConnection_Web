@@ -188,7 +188,8 @@ def edit_profile(request):
                 fs = FileSystemStorage()
                 filename = fs.save(file.name, file)
                 uploaded_file_url = fs.url(filename)
-                uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                #uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                uploaded_file_url = settings.BASE_DIR + uploaded_file_url
 
                 imageURL = Users.uploadImage(uploaded_file_url)
                 sessionCtl.updateUsernameAndUserImg(request,username,imageURL)
@@ -249,7 +250,8 @@ def image_message(request,userid):
                 fs = FileSystemStorage()
                 filename = fs.save(file.name, file)
                 uploaded_file_url = fs.url(filename)
-                uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                #uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                uploaded_file_url = settings.BASE_DIR + uploaded_file_url
 
                 imageURL = Chats.uploadImage(uploaded_file_url)
                 id = Chats.generate_id()
@@ -401,7 +403,8 @@ def room_image_message(request,roomid):
                 fs = FileSystemStorage()
                 filename = fs.save(file.name, file)
                 uploaded_file_url = fs.url(filename)
-                uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                #uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                uploaded_file_url = settings.BASE_DIR + uploaded_file_url
 
                 imageURL = Chats.uploadImage(uploaded_file_url)
                 id = GroupChats.generate_id()
@@ -442,8 +445,8 @@ def room_setting_image(request,roomid):
                 fs = FileSystemStorage()
                 filename = fs.save(file.name, file)
                 uploaded_file_url = fs.url(filename)
-                uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
-
+                #uploaded_file_url = settings.BASE_DIR + uploaded_file_url.replace("/", "\\")
+                uploaded_file_url = settings.BASE_DIR + uploaded_file_url
                 imageURL = ChatRooms.uploadImage(uploaded_file_url)
 
                 ChatRooms.update_RoomImg(roomid,imageURL)
