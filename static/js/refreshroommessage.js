@@ -99,8 +99,8 @@ window.setInterval(function(){
 
 
                   if(item.senttime == last_msg_senttime){
-                    if(item.seennum > 0){
-                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+item.seennum+"</div>";
+                    if(item.seennum-1 > 0){
+                      innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Seen"+(item.seennum-1)+"</div>";
 
                     }else {
                       innerHtml = innerHtml +"<div class="+'seen'+"id="+'seen'+">"+"<br>Delivered"+"</div>";

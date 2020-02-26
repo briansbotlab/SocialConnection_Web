@@ -62,9 +62,9 @@
                   <span class="time_date">{{value.senttime}}
 
                       {% if value.senttime == last_msg.senttime %}
-                        {% if value.seennum > 0  %}
+                        {% if value.seennum|add:-1 > 0  %}
                         <div class="seen" id="seen">
-                          <br>Seen {{value.seennum}}
+                          <br>Seen {{value.seennum|add:-1}}
                           </div>
                         {% else %}
                         <div class="seen" id="seen">
@@ -104,8 +104,8 @@
 
     {% load static %}
     <!-- use django static tag to load js file and css file. -->
-
-    <script src="{% static 'js/refreshroommessage.js' %}"></script>
+<!--
+    <script src="{% static 'js/refreshroommessage.js' %}"></script>-->
     <script src="{% static 'js/autoscrolltobottom.js' %}"></script>
 
     <script src="{% static 'js/roomtextMsg.js' %}"></script>
