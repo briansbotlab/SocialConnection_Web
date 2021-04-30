@@ -24,7 +24,7 @@ pyrebase==3.1.0
 pytz==2019.3
 requests==2.22.0
 requests-toolbelt==0.9.1
-rsa==4.0
+rsa==4.7
 six==1.14.0
 sqlparse==0.3.0
 static3==0.7.0
